@@ -1,0 +1,51 @@
+import tkinter as tk
+from datetime import datetime
+
+root = tk.Tk()
+
+# Configurações da janela
+root.overrideredirect(True)        # remove bordas e barra de título
+root.attributes("-topmost", True)  # fica sempre na frente
+root.attributes("-alpha", 0.85)    # transparência (0.0 a 1.0)
+root.configure(bg="black")
+
+# Posição na tela (canto inferior direito, por exemplo)
+largura, altura = 300, 80
+x = root.winfo_screenwidth() - largura - 20
+y = root.winfo_screenheight() - altura - 60
+root.geometry(f"{largura}x{altura}+{x}+{y}")
+
+# Label do horário
+label_hora = tk.Label(root, font=("Arial", 36, "bold"), fg="#00FF88", bg="black")
+label_hora.pack()
+
+# Label da data
+label_data = tk.Label(root, font=("Arial", 12), fg="#888888", bg="black")
+label_data.pack()
+
+# Arrastar a janela com o mouse
+def iniciar_arrasto(event):
+    root._x = event.x
+    root._y = event.y
+
+def arrastar(event):
+    dx = event.x - root._x
+    dy = event.y - root._y
+    x = root.winfo_x() + dx
+    y = root.winfo_y() + dy
+    root.geometry(f"+{x}+{y}")
+
+root.bind("<Button-1>", iniciar_arrasto)
+root.bind("<B1-Motion>", arrastar)
+
+# Fechar com clique duplo
+root.bind("<Double-Button-1>", lambda e: root.destroy())
+
+def atualizar():
+    agora = datetime.now()
+    label_hora.config(text=agora.strftime("%H:%M:%S"))
+    label_data.config(text=agora.strftime("%A, %d de %B de %Y"))
+    root.after(1000, atualizar)
+
+atualizar()
+root.mainloop()

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+
+<h1>Pets para Doação</h1>
+<div id="container"></div>
+
+<script>
+  const nomes = ["Bilu", "Lulu", "Miau", "Coelho"];
+  const imagens = ["bilu.png", "lulu.png", "miau.png", "coelho.png"];
+
+  let html = `
+    <table border="1" cellpadding="10" cellspacing="0">
+      <tr>
+        <th>Foto</th>
+        <th>Nome do Pet</th>
+        <th>Operação</th>
+      </tr>
+  `;
+
+  for (let i = 0; i < nomes.length; i++) {
+    html += `
+      <tr>
+        <td><img src="${imagens[i]}" width="80"></td>
+        <td>${nomes[i]}</td>
+        <td><button onclick="mostrarIndice(${i})">Exibir</button></td>
+      </tr>
+    `;
+  }
+
+  html += `</table>`;
+
+  document.getElementById("container").innerHTML = html;
+
+  function mostrarIndice(indice) {
+    alert("Índice: " + indice);
+  }
+</script>
+
+</body>
+</html>
